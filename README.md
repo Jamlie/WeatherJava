@@ -78,26 +78,35 @@ This enum is used by `PrecipitationDecorator`, and it's responsible for storing 
 This is an abstract class that implements the `WeatherDataObservable` interface. It is responsible for extending the weather data.
 
 ### Properties
-* weatherData: `WeatherDataObservable`
+* weatherDataSubject: `IWeatherSubject`
+* temperature: `float`
+* humidity: `float`
+* weatherDataObservable: `WeatherDataObservable`
+
+### Methods
+* `void registerObserver(WeatherDataObservable observer)`: Registers an observer to the subject.
+* `void removeObserver(WeatherDataObservable observer)`: Removes an observer from the subject.
+* `void notifyObservers()`: Notifies all the observers that the weather data has changed.
+* `void setMeasurements(float temperature, float humidity)`: Sets the weather data and notifies the observers.
 
 ## WindSpeedDecorator
 This is a wind speed decorator class that extends the `WeatherDecorator` class. It's responsible for extending:w the wind speed to the weather data.
 
 ### Properties
-* speedInKM: `float`
+* windSpeed: `float`
 * unit: `WindSpeedMeasurementUnit`
 
 ### Methods
-* `void update(float speedInKM, WindSpeedMeasurementUnit unit)`: Updates the wind speed and notifies the observers.
+* `@Override void setMeasurements(float temperature, float humidity, float windSpeed, WindSpeedMeasurementUnit unit)`: Notifies the observers and prints the wind speed in the correct unit.
 
-## TemperatureUnitsDecorator
+## TemperatureDecorator
 This is a temperature decorator class that extends the `WeatherDecorator` class. It's responsible for interchanging the temperature units between Celsius and Fahrenheit.
 
 ### Properties
 * unit: `TemperatureUnit`
 
 ### Methods
-* `void update(TemperatureUnit unit)`: Updates the temperature unit and notifies the observers.
+* `@Override void setMeasurements(float temperature, float humidity, TemperatureUnit unit)`: Sets the weather data and notifies the observers.
 
 ## PrecipitationDecorator
 This is a precipitation decorator class that extends the `WeatherDecorator` class. It's responsible for adding the precipitation type to the weather data.
@@ -106,7 +115,7 @@ This is a precipitation decorator class that extends the `WeatherDecorator` clas
 * precipitation: `PrecipitationType`
 
 ### Methods
-* `void update(PrecipitationType precipitation)`: Updates the precipitation type and notifies the observers.
+* `void setMeasurements(float temperature, float humidity, PrecipitationType precipitation)`: notifies the observers and prints the precipitation type.
 
 # Internal
 ## TemperatureUnitsDecoratorUtils
@@ -123,4 +132,4 @@ This is a utility class that is responsible for helping the wind speed decorator
 * `void printWindSpeed(float speed, WindSpeedMeasurementUnit unit)`: Prints the wind speed in the correct unit.
 * `float convertKilometersPerHourToMilesPerHour(float windSpeed)`: Converts the wind speed from Kilometers per hour to Miles per hour.
 
-![Untitled.png](Untitled.png)
+![UMLDiagram.png](UMLDiagram.png)

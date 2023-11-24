@@ -4,10 +4,7 @@ import com.jam.common.WeatherDataObservable;
 import com.jam.types.PrecipitationType;
 import com.jam.types.TemperatureUnit;
 import com.jam.types.WindSpeedMeasurementUnit;
-import com.jam.weather_decorators.PrecipitationDecorator;
-import com.jam.weather_decorators.TemperatureUnitsDecorator;
-import com.jam.weather_decorators.WeatherDecorator;
-import com.jam.weather_decorators.WindSpeedDecorator;
+import com.jam.weather_decorators.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,17 +16,18 @@ public class Main {
         weatherDataSubject.setMeasurements(19, 80);
         weatherDataSubject.setMeasurements(30, 40);
 
-        WeatherDecorator p = new PrecipitationDecorator(currentConditionsDisplay, PrecipitationType.RAIN);
-        WeatherDecorator t = new TemperatureUnitsDecorator(currentConditionsDisplay, TemperatureUnit.FAHRENHEIT);
-        WeatherDecorator w = new WindSpeedDecorator(currentConditionsDisplay, 20, WindSpeedMeasurementUnit.MPH);
+        IWeatherDataSubject precipitationDecorator = new PrecipitationDecorator(PrecipitationType.RAIN);
 
-        weatherDataSubject.registerObserver(p);
-        weatherDataSubject.registerObserver(t);
-        weatherDataSubject.registerObserver(w);
+        StatisticsDisplay statisticsDisplayPrecipitation = new StatisticsDisplay(precipitationDecorator);
 
-        System.out.println("-----------------");
+        precipitationDecorator.setMeasurements(20, 80);
+        precipitationDecorator.setMeasurements(30, 70);
+        precipitationDecorator.setMeasurements(40, 60);
+
         weatherDataSubject.removeObserver(statisticsDisplay);
+        precipitationDecorator.removeObserver(statisticsDisplayPrecipitation);
 
         weatherDataSubject.setMeasurements(21, 90);
+        precipitationDecorator.setMeasurements(20, 80);
     }
 }

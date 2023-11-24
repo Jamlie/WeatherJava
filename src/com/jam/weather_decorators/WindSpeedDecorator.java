@@ -1,21 +1,34 @@
 package com.jam.weather_decorators;
 
+import com.jam.WeatherDataSubject;
 import com.jam.common.WeatherDataObservable;
-import com.jam.internal.WindSpeedDecoratorUtils;
 import com.jam.types.WindSpeedMeasurementUnit;
 
 public class WindSpeedDecorator extends WeatherDecorator {
+    private final float windSpeed;
     private final WindSpeedMeasurementUnit unit;
-    private final float speedInKM;
-    public WindSpeedDecorator(WeatherDataObservable observable, float speedInKM, WindSpeedMeasurementUnit unit) {
-        super(observable);
-        this.speedInKM = speedInKM;
+
+    public WindSpeedDecorator(float windSpeed, WindSpeedMeasurementUnit unit) {
+        super();
+        this.windSpeed = windSpeed;
+        this.unit = unit;
+    }
+
+    public WindSpeedDecorator(WeatherDataSubject weatherDataSubject, float windSpeed, WindSpeedMeasurementUnit unit) {
+        super(weatherDataSubject);
+        this.windSpeed = windSpeed;
+        this.unit = unit;
+    }
+
+    public WindSpeedDecorator(WeatherDataObservable weatherDataObservable, float windSpeed, WindSpeedMeasurementUnit unit) {
+        super(weatherDataObservable);
+        this.windSpeed = windSpeed;
         this.unit = unit;
     }
 
     @Override
-    public void update(float temperature, float humidity) {
-        this.weatherDataObservable.update(temperature, humidity);
-        WindSpeedDecoratorUtils.printWindSpeed(this.speedInKM, this.unit);
+    public void setMeasurements(float temperature, float humidity) {
+        super.setMeasurements(temperature, humidity);
+        System.out.println("Wind Speed: " + windSpeed + " " + unit.toString());
     }
 }

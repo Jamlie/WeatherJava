@@ -4,12 +4,6 @@ import com.jam.WeatherDataSubject;
 import com.jam.common.WeatherDataObservable;
 import com.jam.types.PrecipitationType;
 
-//void registerObserver(WeatherDataObservable observer);
-//void removeObserver(WeatherDataObservable observer);
-//void notifyObservers();
-//
-//void setMeasurements(float temperature, float humidity);
-
 public class PrecipitationDecorator extends WeatherDecorator {
     private final PrecipitationType precipitation;
 
